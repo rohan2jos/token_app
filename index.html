@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>JSON Test</title>
+</head>
+<body>
+	<button onclick="search();">Get in line</button>
+    <div id="myData"></div>
+    <script>
+	function search() {
+
+        console.log('we are here')
+	
+		fetch('http://127.0.0.1:5002/tokens')
+            .then(function (response) {
+                return console.log(response.json());
+            })
+            .then(function (data) {
+                appendData(data);
+            })
+            .catch(function (err) {
+                console.log('error: ' + err);
+            });   
+    }
+
+    function appendData(data) {
+            
+        console.log('append func')
+
+        var mainContainer = document.getElementById("myData");
+        
+    }	
+
+    </script>
+</body>
+</html>
