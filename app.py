@@ -1,5 +1,5 @@
-import logging
 from flask import Flask, request
+import logging 
 
 APP = Flask(__name__)
 LOGGER = logging.getLogger(__name__)
@@ -7,7 +7,7 @@ LOGGER = logging.getLogger(__name__)
 # set the basic logging config for the python logging module
 logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s:%(message)s')
 
-
+#root endpoint
 @APP.route('/', methods=['GET'])
 def root_fun():
     """
@@ -19,7 +19,7 @@ def root_fun():
     LOGGER.info('Called GET on /')
     return 'you are at the root, should not be here!'
 
-
+#tokens endpoint
 @APP.route('/tokens', methods=['GET'])
 def getTokens():
     """
