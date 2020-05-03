@@ -7,33 +7,26 @@
     <title>JSON Test</title>
 </head>
 <body>
-	<button onclick="search();">Get in line</button>
     <div id="myData"></div>
     <script>
-	function search() {
-
-        console.log('we are here')
-	
 		fetch('http://127.0.0.1:5002/tokens')
             .then(function (response) {
-                return console.log(response.json());
+                return response.json();
             })
             .then(function (data) {
                 appendData(data);
             })
             .catch(function (err) {
                 console.log('error: ' + err);
-            });   
-    }
-
-    function appendData(data) {
-            
-        console.log('append func')
-
-        var mainContainer = document.getElementById("myData");
-        
-    }	
-
+            });
+        function appendData(data) {
+            var mainContainer = document.getElementById("myData");
+            for (var i = 0; i < data.length; i++) {
+                var div = document.createElement("div");
+                div.innerHTML =  data[i].name + data[i].time + ' ' + data[i].token_id;
+                mainContainer.appendChild(div);
+            }
+        }
     </script>
 </body>
 </html>
