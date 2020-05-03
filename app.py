@@ -29,7 +29,8 @@ def getTokens():
     LOGGER.info('called the GET on tokens')
     token = [
                 {'token_id': '1', 'name': 'ramesh', 'time': '11:00'},
-                {'token_id': '2', 'name': 'suresh', 'time': '11:15'}
+                {'token_id': '2', 'name': 'suresh', 'time': '11:15'},
+                {'token_id': '3', 'name': 'mahesh', 'time': '11:30'}
             ]
 
     return jsonify(token)
