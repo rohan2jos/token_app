@@ -2,6 +2,7 @@ import logging
 
 from flask import Flask,jsonify
 from flask_restplus import Namespace, Resource
+import service.token_service as token_service
 
 LOGGER = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s:%(message)s')
@@ -15,11 +16,14 @@ tokens_ns = Namespace('Tokens', description='All the tokens apis')
 class Tokens(Resource):
 
     def get(self):
-        token = [
-            {'token_id': '1', 'name': 'ramesh', 'time': '11:00'},
-            {'token_id': '2', 'name': 'suresh', 'time': '11:15'},
-            {'token_id': '3', 'name': 'mahesh', 'time': '11:30'},
-            {'token_id': '4', 'name': 'maheskhota', 'time': '11:35'}
-        ]
+        # token = [
+        #     {'token_id': '1', 'name': 'ramesh', 'time': '11:00'},
+        #     {'token_id': '2', 'name': 'suresh', 'time': '11:15'},
+        #     {'token_id': '3', 'name': 'mahesh', 'time': '11:30'},
+        #     {'token_id': '4', 'name': 'maheskhota', 'time': '11:35'}
+        # ]
 
-        return jsonify(token)
+        # return jsonify(token)
+        LOGGER.info('trying to retrieve all tokens')
+        result, status = token_service.get_all_tokens()
+        return result, status
