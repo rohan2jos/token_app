@@ -22,12 +22,12 @@ class Token_dba:
 
     def get_all_tokens(self):
         """
-        :return:        Return all the tokens in the databse
+        :return:            Return all the tokens in the databse
         """
         LOGGER.info('calling db to fetch all tokens')
         try:
-            current_collection = self.client.DB_NAME.COLLECTION_NAME
-            all_tokens = current_collection.find()
+            token_db = self.client.tokens
+            all_tokens = token_db.tokens.find()
 
             token_list = []
             if all_tokens:
@@ -38,3 +38,23 @@ class Token_dba:
 
         except (PyMongoError, ValueError) as retrieval_excp:
             LOGGER.exception('There was a problem during token retrieval: %s', retrieval_excp)
+
+
+    def create_token(self, data):
+        """
+        :param data:        The data payload of the token that has to be inserted into the
+                            database
+        :return:            200: The created token and the status code
+        """
+        LOGGER.info('Called the dba to create token with name %s', data.get('name'))
+        try:
+            token_db = self.client.tokenapp
+            result = token_db.tokens.insert_one(data)
+            if result:
+                del data['_id']
+                LOGGER.info("=-====================== printing the data")
+                LOGGER.info(data)
+                return data, 200
+            return None, False
+        except (PyMongoError, ValueError) as insertion_excp:
+            LOGGER.exception('There was an issue when inserting into the datbase %s', insertion_excp)
