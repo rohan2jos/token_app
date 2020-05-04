@@ -2,3 +2,4 @@ flask
 flask-restplus
 Werkzeug==0.16.1
 uwsgi_tasks
+pymongo==3.10.1
