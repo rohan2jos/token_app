@@ -52,8 +52,6 @@ class Token_dba:
             result = token_db.tokens.insert_one(data)
             if result:
                 del data['_id']
-                LOGGER.info("=-====================== printing the data")
-                LOGGER.info(data)
                 return data, 200
             return None, False
         except (PyMongoError, ValueError) as insertion_excp:
