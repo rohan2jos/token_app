@@ -32,6 +32,7 @@ class Token_dba:
             token_list = []
             if all_tokens:
                 for one_token in all_tokens:
+                    del one_token['_id']
                     token_list.append(one_token)
                 return token_list, 200
             return False, 404
@@ -48,8 +49,12 @@ class Token_dba:
         """
         LOGGER.info('Called the dba to create token with name %s', data.get('name'))
         try:
+            LOGGER.info('=========================')
+            LOGGER.info(data)
             token_db = self.client.tokenapp
             result = token_db.tokens.insert_one(data)
+            LOGGER.info('======================================')
+
             if result:
                 del data['_id']
                 return data, 200
