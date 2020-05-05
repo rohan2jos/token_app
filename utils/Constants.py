@@ -1,0 +1,4 @@
+MONGODB_LOCALHOST = 'localhost'
+MONGODB_LOCALPORT = 27017
+TOKENS_COLLECTION = 'tokens'
+TOKENS_DB = 'tokenapp'
