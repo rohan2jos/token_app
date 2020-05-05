@@ -26,7 +26,7 @@ class Token_dba:
         """
         LOGGER.info('calling db to fetch all tokens')
         try:
-            token_db = self.client.tokens
+            token_db = self.client.tokenapp
             all_tokens = token_db.tokens.find()
 
             token_list = []
