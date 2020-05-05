@@ -51,6 +51,7 @@ class Token_dba:
         """
         LOGGER.info('Called the dba to create token with name %s', data.get('name'))
         try:
+            LOGGER.info(data)
             token_db = self.client.tokenapp
             result = token_db[TOKENS_COLLECTION].insert_one(data)
 
