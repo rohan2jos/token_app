@@ -1,4 +1,11 @@
-# token_app
+## token_app
+
+# Requirements to run the token_app on local machine
+1. Python 3.x
+2. pip/pip3
+3. mongodb > 3.x
+
+(Ensure you have mongodb running locally)
 
 The repository for the backend for token generation app
 
