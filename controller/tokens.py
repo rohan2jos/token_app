@@ -17,14 +17,12 @@ tokens_ns = Namespace('Tokens', description='All the tokens apis')
 class Tokens(Resource):
 
     def get(self):
-        # token = [
-        #     {'token_id': '1', 'name': 'ramesh', 'time': '11:00'},
-        #     {'token_id': '2', 'name': 'suresh', 'time': '11:15'},
-        #     {'token_id': '3', 'name': 'mahesh', 'time': '11:30'},
-        #     {'token_id': '4', 'name': 'maheskhota', 'time': '11:35'}
-        # ]
-
-        # return jsonify(token)
+        """
+        get all the tokens in the database
+        :return:            200: All the tokens in the database
+                            if there are no tokens, return 200
+                            with an empty list
+        """
         LOGGER.info('trying to retrieve all tokens')
         result, status = token_service.get_all_tokens()
         return result, status
