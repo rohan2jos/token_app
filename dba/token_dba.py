@@ -2,6 +2,7 @@ import logging
 
 from pymongo import MongoClient
 from pymongo.errors import PyMongoError
+from utils.constants import MONGODB_LOCALPORT, MONGODB_LOCALHOST, TOKENS_COLLECTION_NAME
 
 DB_NAME = 'tokenapp'
 COLLECTION_NAME = 'tokens'
@@ -18,7 +19,8 @@ class Token_dba:
         """
         Constructor for setup
         """
-        self.client = MongoClient('localhost', 27017)
+        self.client = MongoClient(MONGODB_LOCALHOST, MONGODB_LOCALPORT)
+        self.db = self.client.tokenapp
 
     def get_all_tokens(self):
         """
@@ -26,8 +28,7 @@ class Token_dba:
         """
         LOGGER.info('calling db to fetch all tokens')
         try:
-            token_db = self.client.tokenapp
-            all_tokens = token_db.tokens.find()
+            all_tokens = self.db[TOKENS_COLLECTION_NAME].find()
 
             token_list = []
             if all_tokens:
@@ -49,11 +50,7 @@ class Token_dba:
         """
         LOGGER.info('Called the dba to create token with name %s', data.get('name'))
         try:
-            LOGGER.info('=========================')
-            LOGGER.info(data)
-            token_db = self.client.tokenapp
-            result = token_db.tokens.insert_one(data)
-            LOGGER.info('======================================')
+            result = self.db[TOKENS_COLLECTION_NAME].insert_one(data)
 
             if result:
                 del data['_id']
