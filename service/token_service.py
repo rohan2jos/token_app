@@ -15,3 +15,14 @@ def get_all_tokens():
     LOGGER.info('called the token service to get all tokens')
     token_dba_obj = token_dba()
     return token_dba_obj.get_all_tokens()
+
+
+def create_token(data):
+    """
+    :param data:        The data payload for the token that has to be created
+    :return:            The created token and the status code for the creation
+                        in the db
+    Call the dba to create a token with the given data payload
+    """
+    token_dba_obj = token_dba()
+    return token_dba_obj.create_token(data)
