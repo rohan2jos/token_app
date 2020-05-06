@@ -33,7 +33,6 @@ def root_fun():
 
 # TODO: Change for production
 if __name__ == "__main__":
-    APP.debug = True
     # get the port from the environment variable
     # if running on localhost, use the localhost
     # port
