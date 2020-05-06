@@ -8,7 +8,8 @@ from flask_sslify import SSLify
 from controller.tokens import tokens_ns
 
 APP = Flask(__name__)
-
+from werkzeug.middleware.proxy_fix import ProxyFix
+APP.wsgi_app = ProxyFix(APP.wsgi_app, x_proto=1, x_host=1)
 if 'DYNO' in os.environ: # only trigger SSLify if the app is running on Heroku
     sslify = SSLify(APP)
 
@@ -19,7 +20,7 @@ LOGGER = logging.getLogger(__name__)
 # set the basic logging config for the python logging module
 logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s:%(message)s')
 
-@APP.route('/', methods=['GET'])
+@APP.route('/root', methods=['GET'])
 def root_fun():
     """
     The root path
