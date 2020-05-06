@@ -1,11 +1,16 @@
+import os
 import logging
 
 from pymongo import MongoClient
 from pymongo.errors import PyMongoError
-from utils.constants import MONGODB_LOCALPORT, MONGODB_LOCALHOST, TOKENS_COLLECTION_NAME
+from utils.constants import TOKENS_COLLECTION_NAME
 
 DB_NAME = 'tokenapp'
 COLLECTION_NAME = 'tokens'
+
+MONGO_URL = os.environ.get('MONGO_URL')
+if not MONGO_URL:
+    MONGO_URL = "mongodb://localhost:27017"
 
 LOGGER = logging.getLogger(__name__)
 # set the basic logging config for the python logging module
@@ -19,7 +24,7 @@ class Token_dba:
         """
         Constructor for setup
         """
-        self.client = MongoClient(MONGODB_LOCALHOST, MONGODB_LOCALPORT)
+        self.client = MongoClient(MONGO_URL)
         self.db = self.client.tokenapp
 
     def get_all_tokens(self):
