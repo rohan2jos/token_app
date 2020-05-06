@@ -1,17 +1,18 @@
-import os
 import logging
+import os
 
 from flask import Flask
 from flask_restplus import Api
 from flask_sslify import SSLify
+from werkzeug.middleware.proxy_fix import ProxyFix
 
 from controller.tokens import tokens_ns
 
 APP = Flask(__name__)
-from werkzeug.middleware.proxy_fix import ProxyFix
+
 APP.wsgi_app = ProxyFix(APP.wsgi_app, x_proto=1, x_host=1)
-if 'DYNO' in os.environ: # only trigger SSLify if the app is running on Heroku
-    sslify = SSLify(APP)
+# if 'DYNO' in os.environ: # only trigger SSLify if the app is running on Heroku
+#     sslify = SSLify(APP)
 
 API = Api(APP, version='1.0', title='Token apis', description='All the token apis')
 API.add_namespace(tokens_ns, '/')
