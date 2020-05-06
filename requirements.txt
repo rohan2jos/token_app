@@ -1,6 +1,11 @@
 flask
 flask-restplus
 Werkzeug==0.16.1
+<<<<<<< Updated upstream
 uwsgi_tasks
 pymongo==3.10.1
 gunicorn==19.0.0
+=======
+zipp==3.1.0
+flask-sslify
+>>>>>>> Stashed changes

@@ -3,10 +3,15 @@ import logging
 
 from flask import Flask
 from flask_restplus import Api
+from flask_sslify import SSLify
 
 from controller.tokens import tokens_ns
 
 APP = Flask(__name__)
+
+if 'DYNO' in os.environ: # only trigger SSLify if the app is running on Heroku
+    sslify = SSLify(APP)
+
 API = Api(APP, version='1.0', title='Token apis', description='All the token apis')
 API.add_namespace(tokens_ns, '/')
 
