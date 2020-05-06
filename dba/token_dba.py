@@ -40,7 +40,7 @@ class Token_dba:
                 for one_token in all_tokens:
                     del one_token['_id']
                     token_list.append(one_token)
-                return token_list, 200
+                return {"tokens": token_list}, 200
             return False, 404
 
         except (PyMongoError, ValueError) as retrieval_excp:
