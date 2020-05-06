@@ -33,4 +33,4 @@ if __name__ == "__main__":
     # if running on localhost, use the localhost
     # port
     port = int(os.environ.get("PORT", 5002))
-    APP.run(host='0.0.0.0', port=port)
+    APP.run(host='0.0.0.0', port=port, ssl_context='adhoc')
