@@ -30,9 +30,9 @@ TOKEN_LIST_SUCCESS = tokens_ns.model("get token list success response", {
     "tokens": fields.List(fields.Nested(TOKEN_PAYLOAD))
 })
 
-TOKEN_POST_400 = tokens_ns.model("no data payload/body validation failed", {
-    "message": "Payload required/Payload validation failed",
-    "status": "400"
+TOKEN_POST_400 = tokens_ns.model("validation failed", {
+    "message": fields.String(example="Payload required/Payload validation failed"),
+    "status": fields.String(example="400")
 })
 
 
