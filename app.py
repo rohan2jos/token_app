@@ -7,9 +7,11 @@ from flask_sslify import SSLify
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 from controller.tokens import tokens_ns
+from timeslot_utils import timeslot_engine
 
 APP = Flask(__name__)
 
+# this is for heroku deployments where the https has to be enforced
 APP.wsgi_app = ProxyFix(APP.wsgi_app, x_proto=1, x_host=1)
 
 API = Api(APP, version='1.0', title='Token apis', description='All the token apis')
@@ -18,6 +20,9 @@ API.add_namespace(tokens_ns, '/')
 LOGGER = logging.getLogger(__name__)
 # set the basic logging config for the python logging module
 logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s:%(message)s')
+
+# setup when the deployment is coming up
+timeslot_engine.setup_timeslot_db()
 
 # TODO: Change for production
 if __name__ == "__main__":
