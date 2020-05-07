@@ -19,3 +19,5 @@ This is a python 3 based repository
 4. Install the python requirements by running ```pip3 install -r requirements.txt```
 5. Ensure that the command line points to the location of app.py
 6. Run the api by running: ```python3 app.py```
+
+Access the swagger at: https://localhost:5002
