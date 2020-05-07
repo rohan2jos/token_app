@@ -10,7 +10,7 @@ from controller.tokens import tokens_ns
 
 APP = Flask(__name__)
 
-# APP.wsgi_app = ProxyFix(APP.wsgi_app, x_proto=1, x_host=1)
+APP.wsgi_app = ProxyFix(APP.wsgi_app, x_proto=1, x_host=1)
 
 API = Api(APP, version='1.0', title='Token apis', description='All the token apis')
 API.add_namespace(tokens_ns, '/')
