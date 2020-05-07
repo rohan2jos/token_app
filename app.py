@@ -19,22 +19,11 @@ LOGGER = logging.getLogger(__name__)
 # set the basic logging config for the python logging module
 logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s:%(message)s')
 
-@APP.route('/root', methods=['GET'])
-def root_fun():
-    """
-    The root path
-    Returns string
-
-    #TODO:          This path has to be blocked on the gateway; Add redirect
-    """
-    LOGGER.info('Called GET on /')
-    return 'you are at the root, should not be here!'
-
-
 # TODO: Change for production
 if __name__ == "__main__":
     # get the port from the environment variable
     # if running on localhost, use the localhost
     # port
+    LOGGER.info('<--Firing up the engines-->')
     port = int(os.environ.get("PORT", 5002))
     APP.run(host='0.0.0.0', port=port, ssl_context='adhoc')
