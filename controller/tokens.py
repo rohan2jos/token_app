@@ -30,6 +30,11 @@ TOKEN_LIST_SUCCESS = tokens_ns.model("get token list success response", {
     "tokens": fields.List(fields.Nested(TOKEN_PAYLOAD))
 })
 
+TOKEN_POST_400 = tokens_ns.model("no data payload/body validation failed", {
+    "message": "Payload required/Payload validation failed",
+    "status": "400"
+})
+
 
 @tokens_ns.route('tokens', methods=['GET'])
 @tokens_ns.response(200, 'success', TOKEN_LIST_SUCCESS)
@@ -60,6 +65,13 @@ class CreateGetToken(Resource):
         This API endpoint creates a new token in the database
         '''
         data = request.get_json()
+        if not data:
+            response = {
+                "error": "Payload required",
+                "status": "400"
+            }
+            return response, 400
+
         LOGGER.info('Creating token for %s', data.get('name'))
         response, status = token_service.create_token(data)
         if response:
