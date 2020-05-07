@@ -54,6 +54,7 @@ class Tokens(Resource):
 
 @tokens_ns.route('token')
 @tokens_ns.response(200, 'success', TOKEN_PAYLOAD)
+@tokens_ns.response(400, 'bad request', TOKEN_POST_400)
 @tokens_ns.expect(TOKEN_PAYLOAD, validate=True)
 class CreateGetToken(Resource):
 
