@@ -4,6 +4,7 @@ import logging
 from flask import Flask, jsonify, request
 from flask_restplus import Namespace, Resource, fields
 import service.token_service as token_service
+from utils import token_controller_utils
 
 LOGGER = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s:%(message)s')
@@ -67,10 +68,12 @@ class CreateGetToken(Resource):
         '''
         data = request.get_json()
         if not data:
-            response = {
-                "error": "Payload required",
-                "status": "400"
-            }
+            response = token_controller_utils.generate_response('Payload required', 400)
+            return response, 400
+        is_data_payload_valid = token_controller_utils.check_data_payload_validity(data)
+
+        if not is_data_payload_valid:
+            response = token_controller_utils.generate_response('payload validation failed', 400)
             return response, 400
 
         LOGGER.info('Creating token for %s', data.get('name'))
