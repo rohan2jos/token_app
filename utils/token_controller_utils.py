@@ -6,12 +6,20 @@ def check_data_payload_validity(data):
     Return:             True: The data payload is valid
                         False: The data payload is not valid
     """
-    if data.get('name') is None or data.get('phone') is None or data.get('email') is None:
+
+    # regular expressions for the payload check
+    pat_name = r'^([a-z]+)( [a-z]+)*( [a-z]+)*$'
+    pat_phone = r'^[7-9][0-9]{9}$'
+    pat_email = r'^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
+
+    # check if we have the appropriate payload data
+    if data.get('name') is not None and data.get('phone') is not None and data.get('email') is not None:    
+        
+        # validate each element of the payload
+        if re.match(pat_phone, data.get('phone')) and re.match(pat_name, data.get('name'), re.IGNORECASE) and re.match(pat_email, data.get('email')):
+            return True 
         return False
-    elif re.match('^[7-9][0-9]{9}$', data.get('phone')) and re.match('^([a-z]+)( [a-z]+)*( [a-z]+)*$', data.get('name'), re.IGNORECASE) and re.match('^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$', data.get('email')):
-        return True
-    else: 
-        return False
+    return False
 
 
 def generate_response(message, status):
