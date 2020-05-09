@@ -7,6 +7,7 @@ from flask_sslify import SSLify
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 from controller.tokens import tokens_ns
+from controller.timeslots import timeslot_ns
 from timeslot_utils import timeslot_engine
 
 APP = Flask(__name__)
@@ -15,7 +16,8 @@ APP = Flask(__name__)
 APP.wsgi_app = ProxyFix(APP.wsgi_app, x_proto=1, x_host=1)
 
 API = Api(APP, version='1.0', title='Token apis', description='All the token apis')
-API.add_namespace(tokens_ns, '/')
+API.add_namespace(tokens_ns, '/token_api/')
+API.add_namespace(timeslot_ns, '/timeslot_api/')
 
 LOGGER = logging.getLogger(__name__)
 # set the basic logging config for the python logging module
