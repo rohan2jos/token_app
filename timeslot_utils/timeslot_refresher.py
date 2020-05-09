@@ -21,8 +21,15 @@ def create_timeslots_at_interval():
     timeslot_engine.generate_time_slots_from_range('9:00', '18:00')
     LOGGER.info("done refreshing the timeslots...")
 
+
 scheduler = BackgroundScheduler()
-scheduler.add_job(func=create_timeslots_at_interval, trigger="interval", seconds=5)
+"""
+run the scheduler from Monday to Friday at 12 am, resulting in a new set of timeslots
+that are open and available
+this will not run on weekends
+NOTE: THIS WILL ERASE THE CURRENT MAPPING OF TOKEN TO TIMESLOT!!!
+"""
+scheduler.add_job(func=create_timeslots_at_interval, trigger="interval", day_of_week='mon-fri', hour='0')
 scheduler.start()
 
 

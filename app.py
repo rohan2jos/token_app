@@ -8,7 +8,8 @@ from werkzeug.middleware.proxy_fix import ProxyFix
 
 from controller.tokens import tokens_ns
 from controller.timeslots import timeslot_ns
-from timeslot_utils import timeslot_engine, timeslot_refresher
+from timeslot_utils import timeslot_engine
+# from timeslot_utils import timeslot_refresher
 
 APP = Flask(__name__)
 
