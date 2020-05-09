@@ -1,3 +1,5 @@
+import re
+
 def check_data_payload_validity(data):
     """
     :param data:        The data payload that we got in the request
@@ -6,7 +8,10 @@ def check_data_payload_validity(data):
     """
     if data.get('name') is None or data.get('phone') is None or data.get('email') is None:
         return False
-    return True
+    elif re.match('^[7-9][0-9]{9}$', data.get('phone')) and re.match('^([a-z]+)( [a-z]+)*( [a-z]+)*$', data.get('name'), re.IGNORECASE) and re.match('^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$', data.get('email')):
+        return True
+    else: 
+        return False
 
 
 def generate_response(message, status):
