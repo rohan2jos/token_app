@@ -18,7 +18,7 @@ def create_timeslots_at_interval():
     function to recreate the timeslots at intervals
     """
     LOGGER.info("refreshing the timeslots")
-    timeslot_engine.populate_time_slots('9:00', '18:00')
+    timeslot_engine.generate_time_slots_from_range('9:00', '18:00')
     LOGGER.info("done refreshing the timeslots...")
 
 scheduler = BackgroundScheduler()

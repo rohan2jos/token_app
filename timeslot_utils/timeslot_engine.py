@@ -17,12 +17,12 @@ def setup_timeslot_db():
     valid timeslots still in the database, keep it
     """
     LOGGER.info('=== setting up the timeslot database ===')
-    populate_time_slots('9:00', '18:00')
+    generate_time_slots_from_range('9:00', '18:00')
     LOGGER.info('YET TO BE IMPLEMENTED')
     pass
 
 
-def populate_time_slots(start, end):
+def generate_time_slots_from_range(start, end):
     """
     :param start:       The start of the time range from which the time slots need
                         to be broken out
