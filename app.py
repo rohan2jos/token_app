@@ -8,7 +8,7 @@ from werkzeug.middleware.proxy_fix import ProxyFix
 
 from controller.tokens import tokens_ns
 from controller.timeslots import timeslot_ns
-from timeslot_utils import timeslot_engine
+from timeslot_utils import timeslot_engine, timeslot_refresher
 
 APP = Flask(__name__)
 
@@ -26,6 +26,9 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s:%(mess
 # setup when the deployment is coming up
 timeslot_engine.setup_timeslot_db()
 
+# refresh the timeslots at set interval
+# commented for now
+# timeslot_refresher.create_timeslots_at_interval()
 # TODO: Change for production
 if __name__ == "__main__":
     # get the port from the environment variable
