@@ -41,3 +41,4 @@ def populate_time_slots(start, end):
         time += datetime.timedelta(minutes=slot_time)
     LOGGER.info("printing the timeslots that have been generated for today")
     LOGGER.info(hours)
+    return hours
