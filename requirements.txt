@@ -21,3 +21,4 @@ uwsgi-tasks==0.7.3
 Werkzeug==0.16.1
 zipp==3.1.0
 flask-sslify
+apscheduler
