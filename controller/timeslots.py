@@ -23,4 +23,4 @@ class GetTimeSlots(Resource):
         #TODO: Add a filter to fetch only the available timeslots
         """
         LOGGER.info("Calling GET on the /timeslots")
-        return timeslot_service.get_all_tokens()
+        return timeslot_service.get_all_timeslots()

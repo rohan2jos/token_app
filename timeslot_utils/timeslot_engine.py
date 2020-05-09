@@ -17,6 +17,7 @@ def setup_timeslot_db():
     valid timeslots still in the database, keep it
     """
     LOGGER.info('=== setting up the timeslot database ===')
+    populate_time_slots('9:00', '18:00')
     LOGGER.info('YET TO BE IMPLEMENTED')
     pass
 
@@ -29,4 +30,14 @@ def populate_time_slots(start, end):
                         be broken out
     """
     LOGGER.info('Calculating and populating the time slots')
-    pass
+
+    slot_time = 15
+    hours = []
+    time = datetime.datetime.strptime(start, '%H:%M')
+    end = datetime.datetime.strptime(end, '%H:%M')
+
+    while time <= end:
+        hours.append(time.strftime("%H:%M"))
+        time += datetime.timedelta(minutes=slot_time)
+    LOGGER.info("printing the timeslots that have been generated for today")
+    LOGGER.info(hours)
