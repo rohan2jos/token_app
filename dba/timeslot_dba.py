@@ -30,5 +30,8 @@ class TimeslotDBA:
         Return all the available timeslots in the database
         """
         LOGGER.info("calling the populate timeslots")
-        timeslot_engine.populate_time_slots('9', '18')
-        return 200
+        timeslots = timeslot_engine.populate_time_slots('9:00', '18:00')
+        response = {
+            "timeslots": timeslots
+        }
+        return response, 200
