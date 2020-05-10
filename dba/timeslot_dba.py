@@ -1,7 +1,7 @@
 import os
 import logging
 
-from pymongo import MongoClient
+from pymongo import MongoClient, ASCENDING, DESCENDING
 from pymongo.errors import PyMongoError
 from utils.constants import TIMESLOT_COLLECTION_NAME
 import utils.timeslot_dba_utils as timeslot_dba_utils
@@ -61,12 +61,23 @@ class TimeslotDBA:
             return True
         return False
 
-    def create_timeslot_index(self):
+    def create_timeslot_index(self, index_name):
         """
+        :param index_name:      The name of the index that has to be created
+        :return:                The name of the index that has been created
         Create an index on the timeslot collection
         """
-        LOGGER.info('[SETUP] Creating collection on timeslot db')
-        return True
+        LOGGER.info('[SETUP] Creating index on timeslot collection')
+        try:
+            _ = self.db[TIMESLOT_COLLECTION_NAME].create_index("timeslot",
+                                                               name=index_name,
+                                                               unique=True)
+            LOGGER.info('Created collection name ' + index_name)
+            return True
+        except (PyMongoError, ValueError) as index_exception:
+            LOGGER.error('There was an exception when creating index on the timeslot collection')
+            LOGGER.error(index_exception)
+            return False
 
     def create_collection(self):
         """
