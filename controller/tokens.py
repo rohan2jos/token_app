@@ -82,3 +82,24 @@ class CreateGetToken(Resource):
             LOGGER.info('token created successfully!')
             return data, 200
         return None, 400
+
+
+class GenerateToken(Resource):
+
+    def post(self):
+        """
+        POST a token, and associate an available timeslot
+        Name: Create a token with timeslot
+        Version: 1.0
+        This API creates a token and associates a timeslot to it if available
+        """
+        data = request.get_json()
+        if not data:
+            response = token_controller_utils.generate_response('Payload required', 400)
+            return response, 400
+        is_data_payload_valid = token_controller_utils.check_data_payload_validity(data)
+
+        if not is_data_payload_valid:
+            response = token_controller_utils.generate_response('payload validation failed', 400)
+            return response, 400
+        return True, 200
