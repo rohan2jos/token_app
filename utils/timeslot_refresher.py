@@ -1,10 +1,9 @@
-import time
 import atexit
 import logging
 
 from apscheduler.schedulers.background import BackgroundScheduler
 
-from timeslot_utils import timeslot_engine
+from utils import timeslot_engine
 
 LOGGER = logging.getLogger(__name__)
 # set the basic logging config for the python logging module

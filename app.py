@@ -3,12 +3,12 @@ import os
 
 from flask import Flask
 from flask_restplus import Api
-from flask_sslify import SSLify
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 from controller.tokens import tokens_ns
 from controller.timeslots import timeslot_ns
-from timeslot_utils import timeslot_engine
+from utils import timeslot_engine
+
 # from timeslot_utils import timeslot_refresher
 
 APP = Flask(__name__)

@@ -4,7 +4,7 @@ import logging
 from pymongo import MongoClient
 from pymongo.errors import PyMongoError
 from utils.constants import TIMESLOT_COLLECTION_NAME
-import timeslot_utils.timeslot_dba_utils as timeslot_dba_utils
+import utils.timeslot_dba_utils as timeslot_dba_utils
 
 MONGO_URL = os.environ.get('MONGO_URL')
 if not MONGO_URL:
