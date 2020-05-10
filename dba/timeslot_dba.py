@@ -31,17 +31,26 @@ class TimeslotDBA:
         """
         return 200
 
-    def insert_generated_timeslots(self, timeslots):
+    def insert_generated_timeslots(self, timeslots, date_now):
         """
         :param timeslots:       list of generated timeslots that have to be entered into
                                 the database
+        :param date_now:        The date now in UTC
         Creates correct documents from the timeslots list and enters them into the database
         """
         LOGGER.info("[SETUP] Populating the timeslots")
+        LOGGER.info("[SETUP] the date today is: " + str(date_now))
         try:
-            for a_timeslsot in timeslots:
-                insertion_result = self.db[TIMESLOT_COLLECTION_NAME].insert_one(
-                    timeslot_dba_utils.generate_timeslot_doc(a_timeslsot))
+            timeslot_docs = []
+            for a_timeslot in timeslots:
+                timeslot_docs.append(timeslot_dba_utils.generate_timeslot_doc(a_timeslot))
+
+            doc_to_insert = {
+                "date": date_now,
+                "timeslots": timeslot_docs
+            }
+
+            insertion_result = self.db[TIMESLOT_COLLECTION_NAME].insert_one(doc_to_insert)
             if insertion_result:
                 return True
             return False
@@ -69,7 +78,7 @@ class TimeslotDBA:
         """
         LOGGER.info('[SETUP] Creating index on timeslot collection')
         try:
-            _ = self.db[TIMESLOT_COLLECTION_NAME].create_index("timeslot",
+            _ = self.db[TIMESLOT_COLLECTION_NAME].create_index("date",
                                                                name=index_name,
                                                                unique=True)
             LOGGER.info('Created collection name ' + index_name)
@@ -92,3 +101,23 @@ class TimeslotDBA:
             LOGGER.error("There was an exception when creating the timeslot collection")
             LOGGER.error(creation_excp)
             return False
+
+    def check_today_doc_exist(self, date_today):
+        """
+        :param date_today:      The date today in string format
+        :return:                True: if there is a document matching todays date
+                                False: if there is no document matching todays date
+        """
+        try:
+            query_filter = {"date": date_today}
+            doc_present = False
+            doc_with_today_date = self.db.timeslots.find_one(query_filter)
+
+            if doc_with_today_date:
+                LOGGER.info('[SETUP] There is a doc with todays date')
+                return True
+            return False
+        except (PyMongoError, ValueError) as get_today_doc_excp:
+            LOGGER.error("there was a problem checking todays doc")
+            LOGGER.error(get_today_doc_excp)
+            return True
