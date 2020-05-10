@@ -1,5 +1,8 @@
 import datetime
 import logging
+import sys
+
+from dba.timeslot_dba import TimeslotDBA
 
 LOGGER = logging.getLogger(__name__)
 # set the basic logging config for the python logging module
@@ -17,9 +20,13 @@ def setup_timeslot_db():
     valid timeslots still in the database, keep it
     """
     LOGGER.info('=== setting up the timeslot database ===')
-    generate_time_slots_from_range('9:00', '18:00')
-    LOGGER.info('YET TO BE IMPLEMENTED')
-    pass
+    timeslot_dba = TimeslotDBA()
+    generated_timeslots = generate_time_slots_from_range('9:00', '18:00')
+    insert_response = timeslot_dba.insert_generated_timeslots(generated_timeslots)
+    if not insert_response:
+        LOGGER.error('There was a problem generating and inserting the timeslots')
+        sys.exit()
+    LOGGER.info("[SETUP] The timeslots were setup")
 
 
 def generate_time_slots_from_range(start, end):
@@ -29,7 +36,8 @@ def generate_time_slots_from_range(start, end):
     :param end:         The end of the time range to which the time slots need to
                         be broken out
     """
-    LOGGER.info('Calculating and populating the time slots')
+    LOGGER.info('[SETUP] Calculating and populating the time slots')
+    LOGGER.info('[SETUP] calculating the timeslots between ' + start + " and " + end)
 
     slot_time = 15
     hours = []
@@ -39,6 +47,6 @@ def generate_time_slots_from_range(start, end):
     while time <= end:
         hours.append(time.strftime("%H:%M"))
         time += datetime.timedelta(minutes=slot_time)
-    LOGGER.info("printing the timeslots that have been generated for today")
+    LOGGER.info("[SETUP] printing the timeslots that have been generated for today")
     LOGGER.info(hours)
     return hours
