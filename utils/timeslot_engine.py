@@ -21,6 +21,18 @@ def setup_timeslot_db():
     """
     LOGGER.info('=== setting up the timeslot database ===')
     timeslot_dba = TimeslotDBA()
+
+    # check if the timeslots db is present.  If not, we need to create a new one and set index
+    does_db_exist = timeslot_dba.does_timeslot_db_exist()
+    if not does_db_exist:
+        LOGGER.info('[SETUP] timeslot collection does not exist, creating')
+        collection_create_response = timeslot_dba.create_collection()
+        if not collection_create_response:
+            sys.exit()
+        index_name = timeslot_dba.create_timeslot_index()
+        LOGGER.info(index_name)
+        LOGGER.info("[SETUP] created the index")
+
     generated_timeslots = generate_time_slots_from_range('9:00', '18:00')
     insert_response = timeslot_dba.insert_generated_timeslots(generated_timeslots)
     if not insert_response:

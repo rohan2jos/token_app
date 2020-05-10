@@ -25,13 +25,11 @@ class TimeslotDBA:
         self.client = MongoClient(MONGO_URL)
         self.db = self.client.tokenapp
 
-
     def get_all_timeslots(self):
         """
         Return all the available timeslots in the database
         """
         return 200
-
 
     def insert_generated_timeslots(self, timeslots):
         """
@@ -50,4 +48,36 @@ class TimeslotDBA:
         except (PyMongoError, ValueError) as setup_timeslot_excp:
             LOGGER.error('There was an exception when inserting timeslots')
             LOGGER.error(setup_timeslot_excp)
+            return False
+
+    def does_timeslot_db_exist(self):
+        """
+        Check if the collection is in the timeslot db
+        :return:                True: The collection exists, the db has been created previously
+                                False: The collection does not exist, this is a new db
+        """
+        collections = self.db.list_collection_names()
+        if TIMESLOT_COLLECTION_NAME in collections:
+            return True
+        return False
+
+    def create_timeslot_index(self):
+        """
+        Create an index on the timeslot collection
+        """
+        LOGGER.info('[SETUP] Creating collection on timeslot db')
+        return True
+
+    def create_collection(self):
+        """
+        Create the timeslot collection
+        """
+        try:
+            created_collection = self.db[TIMESLOT_COLLECTION_NAME]
+            if created_collection:
+                return True
+            return False
+        except (PyMongoError, ValueError) as creation_excp:
+            LOGGER.error("There was an exception when creating the timeslot collection")
+            LOGGER.error(creation_excp)
             return False
