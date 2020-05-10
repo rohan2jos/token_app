@@ -29,8 +29,7 @@ def setup_timeslot_db():
         collection_create_response = timeslot_dba.create_collection()
         if not collection_create_response:
             sys.exit()
-        index_name = timeslot_dba.create_timeslot_index()
-        LOGGER.info(index_name)
+        _ = timeslot_dba.create_timeslot_index("timeslot_index")
         LOGGER.info("[SETUP] created the index")
 
     generated_timeslots = generate_time_slots_from_range('9:00', '18:00')
