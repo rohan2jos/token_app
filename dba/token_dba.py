@@ -63,3 +63,14 @@ class Token_dba:
             return None, False
         except (PyMongoError, ValueError) as insertion_excp:
             LOGGER.exception('There was an issue when inserting into the datbase %s', insertion_excp)
+
+
+    def generate_token(self, data):
+        """
+        :param data:        The data payload of the token that has to be assigned a time
+        :return:            The token with the timeslot assigned
+                            200: If there is an available timeslot and the token was able
+                            to be assigned one
+                            404: If there is no available time slot
+        """
+        return {"message": "Yet to be implemented"}, 200
