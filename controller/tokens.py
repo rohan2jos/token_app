@@ -84,6 +84,8 @@ class CreateGetToken(Resource):
         return None, 400
 
 
+@tokens_ns.expect(TOKEN_PAYLOAD, validate=True)
+@tokens_ns.route('generate_token')
 class GenerateToken(Resource):
 
     def post(self):
@@ -102,4 +104,5 @@ class GenerateToken(Resource):
         if not is_data_payload_valid:
             response = token_controller_utils.generate_response('payload validation failed', 400)
             return response, 400
-        return True, 200
+        generation_response, status = token_service.generate_token(data)
+        return generation_response, status

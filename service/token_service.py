@@ -26,3 +26,14 @@ def create_token(data):
     """
     token_dba_obj = token_dba()
     return token_dba_obj.create_token(data)
+
+
+def generate_token(data):
+    """
+    :param data:        The data payload of the token that has to be created and
+                        assigned a timeslot
+    :return:            The token with an assigned timeslot
+    Call the dba method to generate a token with an assigned timeslot
+    """
+    token_dba_obj = token_dba()
+    return token_dba_obj.generate_token(data)
