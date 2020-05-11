@@ -121,3 +121,19 @@ class TimeslotDBA:
             LOGGER.error("there was a problem checking todays doc")
             LOGGER.error(get_today_doc_excp)
             return True
+
+    def get_availale_timeslots(self, requested_time, requested_date):
+        """
+        :param requsted_time:       The time after which the available timeslots need to
+                                    be fetched
+        :param requested_date:      The date for which the available timeslots need to be
+                                    fetched
+        Fetch the available timeslots for the requested date after the requested time
+        """
+        try:
+            # TODO: write query to fetch the timeslots after the requsted time and on the requested date
+            pass
+        except (PyMongoError, ValueError) as retrieval_excp:
+            LOGGER.error("There was an exception while fetching the available timeslots")
+            LOGGER.error(retrieval_excp)
+            return False, 400
