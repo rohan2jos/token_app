@@ -27,6 +27,25 @@ class Token_dba:
         self.client = MongoClient(MONGO_URL)
         self.db = self.client.tokenapp
 
+    def get_all_users(self):
+        """
+        :return:            Return all the users in the databse
+        """
+        LOGGER.info('calling db to fetch all users')
+        try:
+            all_users = self.db[TOKENS_COLLECTION_NAME].find()
+
+            user_list = []
+            if all_users:
+                for one_user in all_users:
+                    one_user = {key: one_user[key] for key in one_user.keys() & {'name', 'phone', 'email'}}
+                    user_list.append(one_user)
+                return {"users": user_list}, 200
+            return False, 404
+
+        except (PyMongoError, ValueError) as retrieval_excp:
+            LOGGER.exception('There was a problem during user retrieval: %s', retrieval_excp)
+
     def get_all_tokens(self):
         """
         :return:            Return all the tokens in the databse

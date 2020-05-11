@@ -5,6 +5,7 @@ from flask import Flask
 from flask_restplus import Api
 from werkzeug.middleware.proxy_fix import ProxyFix
 
+from controller.users import users_ns
 from controller.tokens import tokens_ns
 from controller.timeslots import timeslot_ns
 from utils import timeslot_engine
@@ -17,6 +18,7 @@ APP = Flask(__name__)
 APP.wsgi_app = ProxyFix(APP.wsgi_app, x_proto=1, x_host=1)
 
 API = Api(APP, version='1.0', title='Token apis', description='All the token apis')
+API.add_namespace(users_ns, '/user_api/')
 API.add_namespace(tokens_ns, '/token_api/')
 API.add_namespace(timeslot_ns, '/timeslot_api/')
 
