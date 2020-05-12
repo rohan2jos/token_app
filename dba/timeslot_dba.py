@@ -130,11 +130,14 @@ class TimeslotDBA:
         """
         try:
             # TODO: write query to fetch the timeslots after the requsted time and on the requested date
+            local_time = local_date_time.get('converted_time')
+            local_date = local_date_time.get('converted_date')
+            LOGGER.info("Getting available timeslots after " + local_time + " on the date " + local_date)
             """
-            db.getCollection('timeslots').aggregate( [
-{$unwind: '$timeslots'},
-{$match: { $and: [{'date': '05112020'}, {'timeslots.timeslot': { $gt: '11:00' } }] } }
-] )
+            db.getCollection('timeslots').aggregate([
+                {$unwind: '$timeslots'},
+            {$match: { $ and: [{'date': '05122020'}, {'timeslots.timeslot': { $gte: '17:00'}}]}}
+            ] )
             """
             pass
         except (PyMongoError, ValueError) as retrieval_excp:
