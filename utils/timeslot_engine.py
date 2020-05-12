@@ -83,7 +83,7 @@ def generate_utc_date():
 def get_local_time_date_now():
     """
     Generate the UTC time and convert to IST
-    Return the IST datetime object
+    Return a dict containing the converted date and time in the required format
     """
     local_tz = pytz.timezone('Asia/Calcutta')
     time_date_utc = datetime.datetime.now(pytz.utc)
