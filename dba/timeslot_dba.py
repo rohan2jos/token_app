@@ -139,7 +139,7 @@ class TimeslotDBA:
             {$match: { $ and: [{'date': '05122020'}, {'timeslots.timeslot': { $gte: '17:00'}}]}}
             ] )
             """
-            pass
+            return True, 200
         except (PyMongoError, ValueError) as retrieval_excp:
             LOGGER.error("There was an exception while fetching the available timeslots")
             LOGGER.error(retrieval_excp)

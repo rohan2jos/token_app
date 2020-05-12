@@ -22,4 +22,5 @@ def get_available_timeslots(local_time_date):
     call the dba method to fetch the available timeslots after the current date and
     time
     """
-    
+    timeslot_dba = TimeslotDBA()
+    return timeslot_dba.get_availale_timeslots(local_time_date)

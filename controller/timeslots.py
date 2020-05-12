@@ -37,5 +37,5 @@ class AvailableTimeSlots(Resource):
         Return all the available time slots based on the time
         """
         time_and_date_local = timeslot_engine.get_local_time_date_now()
-
-        return {'Yet to be implemented'}, 200
+        response, status = timeslot_service.get_available_timeslots(time_and_date_local)
+        return response, status
