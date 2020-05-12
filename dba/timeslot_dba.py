@@ -133,14 +133,56 @@ class TimeslotDBA:
             local_time = local_date_time.get('converted_time')
             local_date = local_date_time.get('converted_date')
             LOGGER.info("Getting available timeslots after " + local_time + " on the date " + local_date)
-            """
-            db.getCollection('timeslots').aggregate([
-                {$unwind: '$timeslots'},
-            {$match: { $ and: [{'date': '05122020'}, {'timeslots.timeslot': { $gte: '17:00'}}]}}
-            ] )
-            """
-            return True, 200
+
+            available_timeslots = []
+            query_filter = self.generate_available_slot_query(local_time, local_date)
+            query_result = self.db[TIMESLOT_COLLECTION_NAME].aggregate(query_filter)
+
+            for a_timeslot in query_result:
+                del a_timeslot['_id']
+                available_timeslots.append(a_timeslot)
+            if not available_timeslots:
+                return [], 404
+            return available_timeslots, 200
         except (PyMongoError, ValueError) as retrieval_excp:
             LOGGER.error("There was an exception while fetching the available timeslots")
             LOGGER.error(retrieval_excp)
             return False, 400
+
+    @staticmethod
+    def generate_available_slot_query(local_time, local_date):
+        """
+        :param local_time:      The local time that has been converted. Is in the format HH:MM
+        :param local_date:      The local date that has been converted. Is in the format mmddyyyy
+        :return:                A query filter dict that is used in the aggregation to find the
+                                available timeslots after the converted time on the given day
+        Example query filter:
+
+            db.getCollection('timeslots').aggregate([
+                {$unwind: '$timeslots'},
+            {$match: { $and: [{'date': '05122020'}, {'timeslots.timeslot': { $gte: '17:00'}}]}}
+            ] )
+        """
+        query_filter = [
+            {
+                '$unwind': '$timeslots'
+            },
+            {
+                '$match': {
+                    '$and': [
+                        {
+                            'date': local_date
+                        },
+                        {
+                            'timeslots.timeslot': {
+                                '$gte': local_time
+                            }
+                        },
+                        {
+                            'timeslots.assigned': False
+                        }
+                    ]
+                }
+            }
+        ]
+        return query_filter
