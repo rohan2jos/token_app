@@ -122,16 +122,20 @@ class TimeslotDBA:
             LOGGER.error(get_today_doc_excp)
             return True
 
-    def get_availale_timeslots(self, requested_time, requested_date):
+    def get_availale_timeslots(self, local_date_time):
         """
-        :param requsted_time:       The time after which the available timeslots need to
-                                    be fetched
-        :param requested_date:      The date for which the available timeslots need to be
-                                    fetched
+        :param local_date_time: The datetime object that has been converted from IST to
+                                the local time zone
         Fetch the available timeslots for the requested date after the requested time
         """
         try:
             # TODO: write query to fetch the timeslots after the requsted time and on the requested date
+            """
+            db.getCollection('timeslots').aggregate( [
+{$unwind: '$timeslots'},
+{$match: { $and: [{'date': '05112020'}, {'timeslots.timeslot': { $gt: '11:00' } }] } }
+] )
+            """
             pass
         except (PyMongoError, ValueError) as retrieval_excp:
             LOGGER.error("There was an exception while fetching the available timeslots")

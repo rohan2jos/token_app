@@ -15,12 +15,11 @@ def get_all_timeslots():
     return timeslot_dba.get_all_timeslots()
 
 
-def get_available_timeslots(requested_time, requested_date):
+def get_available_timeslots(local_time_date):
     """
-    :param requested_time:      The time after which the timeslots are available
-    :param requested_date:      The date for which the timeslots that are available
-                                are requested
-    call the dba method to fetch the available timeslots for the requested date and
-    after the requested time
+    :param local_time_date:     The date time object converted from UTC to the local
+                                time zone
+    call the dba method to fetch the available timeslots after the current date and
+    time
     """
     

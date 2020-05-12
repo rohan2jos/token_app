@@ -3,6 +3,7 @@ import logging
 
 from flask import Flask, jsonify, request
 from flask_restplus import Namespace, Resource, fields
+import utils.timeslot_engine as timeslot_engine
 
 import service.timeslot_service as timeslot_service
 import utils.api_utils as api_utils
@@ -34,10 +35,7 @@ class AvailableTimeSlots(Resource):
     def get(self):
         """
         Return all the available time slots based on the time
-        The time needs to be passed as a query parameter to the endpoint
         """
-        requested_time = request.args.get('requested_time')
-        requested_date = request.args.get('requested_date')
-        if not requested_time or requested_date:
-            return api_utils.generate_response('Query params required', 400)
+        time_and_date_local = timeslot_engine.get_local_time_date_now()
+
         return {'Yet to be implemented'}, 200
