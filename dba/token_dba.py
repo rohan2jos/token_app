@@ -38,8 +38,8 @@ class Token_dba:
             user_list = []
             if all_users:
                 for one_user in all_users:
-                    one_user = {key: one_user[key] for key in one_user.keys() & {'name', 'phone', 'email'}}
-                    user_list.append(one_user)
+                    user_doc = {'name': one_user.get('name'), 'phone': one_user.get('phone'), 'email': one_user.get('email')}
+                    user_list.append(user_doc)
                 return {"users": user_list}, 200
             return False, 404
 
