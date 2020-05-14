@@ -1,0 +1,31 @@
+<html>
+<body>
+<div style="text-align: center;">
+    <h1>Get</h1>
+		<button class="btn btn-primary" onclick="performGetRequest1()">Get Tokens</button>
+        <button class="btn btn-warning" onclick="clearOutput()">Clear</button>
+		<div class="panel-body" id="getResult1"></div>
+	<br>
+	<br>
+	<br>
+	<br>
+
+    <h1>Post</h1>
+	<form class="form-inline" id="todoInputForm">
+		<div class="form-group">
+		  <input type="text" name="name" class="form-control" id="name" placeholder="Enter your Name">
+		  <input type="email"  name="email" class="form-control" id="email" placeholder="Enter your Email">
+		  <input type="tel"  name="phone"  class="form-control" id="phone" placeholder="Enter your Phone Number">
+		</div>
+		<br>
+		<button type="submit" class="btn btn-primary">Send</button>
+	</form><br/>
+		  <button class="btn btn-warning" onclick="clearOutput()">Clear</button>
+          <div class="panel-body" id="postResult"></div>
+</div>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="app.js"></script>
+</body>
+</html>
