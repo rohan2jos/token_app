@@ -1,7 +1,7 @@
 import json
 import logging
 
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 from flask_restplus import Namespace, Resource, fields
 import utils.timeslot_engine as timeslot_engine
 
@@ -38,4 +38,13 @@ class AvailableTimeSlots(Resource):
         """
         time_and_date_local = timeslot_engine.get_local_time_date_now()
         response, status = timeslot_service.get_available_timeslots(time_and_date_local)
-        return response, status
+        test = []
+        for a_doc in response:
+            test.append(a_doc.get('timeslot'))
+        # return response, status
+        if response:
+            LOGGER.info("====================================")
+            LOGGER.info(test)
+            LOGGER.info("Found the timeslots, rendering template")
+            return render_template('home.html', timeslots=test, test_string='test')
+

@@ -140,7 +140,7 @@ class TimeslotDBA:
 
             for a_timeslot in query_result:
                 del a_timeslot['_id']
-                available_timeslots.append(a_timeslot)
+                available_timeslots.append(a_timeslot.get('timeslots'))
             if not available_timeslots:
                 return [], 404
             return available_timeslots, 200
