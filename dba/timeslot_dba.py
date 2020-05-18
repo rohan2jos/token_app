@@ -134,13 +134,12 @@ class TimeslotDBA:
             local_date = local_date_time.get('converted_date')
             LOGGER.info("Getting available timeslots after " + local_time + " on the date " + local_date)
 
-            available_timeslots = []
             query_filter = self.generate_available_slot_query(local_time, local_date)
             query_result = self.db[TIMESLOT_COLLECTION_NAME].aggregate(query_filter)
-
+            available_timeslots = []
             for a_timeslot in query_result:
                 del a_timeslot['_id']
-                available_timeslots.append(a_timeslot)
+                available_timeslots.append(a_timeslot.get('timeslots')['timeslot'])
             if not available_timeslots:
                 return [], 404
             return available_timeslots, 200

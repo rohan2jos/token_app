@@ -1,9 +1,10 @@
 import json
 import logging
 
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, make_response, render_template
 from flask_restplus import Namespace, Resource, fields
 import utils.timeslot_engine as timeslot_engine
+from flask_bootstrap import Bootstrap
 
 import service.timeslot_service as timeslot_service
 import utils.api_utils as api_utils
@@ -12,6 +13,7 @@ LOGGER = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s:%(message)s')
 
 app = Flask(__name__)
+Bootstrap(app)
 timeslot_ns = Namespace("Timeslots", description="The timeslot apis")
 
 
@@ -38,4 +40,7 @@ class AvailableTimeSlots(Resource):
         """
         time_and_date_local = timeslot_engine.get_local_time_date_now()
         response, status = timeslot_service.get_available_timeslots(time_and_date_local)
-        return response, status
+        if response:
+            return make_response(
+                render_template('available_timeslots.html', my_string='Available_timeslots', timeslots=response))
+        return make_response(render_template('error.html', error_string='No Timeslots Available'))
