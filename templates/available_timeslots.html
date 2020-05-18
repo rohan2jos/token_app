@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container">
+        <ul class="list-group">
+            {% for timeslot in timeslots %}
+            <li class="list-group-item">{{ timeslot }}
+            <span class="badge badge-primary badge-pill">1</span>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
